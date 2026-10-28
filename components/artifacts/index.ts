@@ -38,6 +38,8 @@ export const artifactRenderers: Record<string, ComponentType<ArtifactPartProps>>
 	ls: ToolCallCard,
 	find: ToolCallCard,
 	grep: ToolCallCard,
+	// Hermes consults: the question collapsed, the answer on expand.
+	ask_hermes: ToolCallCard,
 	// The practice pair (2026-10-04): the pose renders the statement ONLY
 	// (the commitment lives in the call's arguments and never renders);
 	// the conclusion carries the outcome + verdict + the reveal.

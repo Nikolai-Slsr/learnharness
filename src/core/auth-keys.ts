@@ -48,6 +48,12 @@ export const AUTH_KEYS: readonly AuthKeyInfo[] = [
 		description: "Web-search engine for the researcher sub-agent — the alternative to Tavily. Setting the key activates it.",
 		docsUrl: "https://brave.com/search/api/",
 	},
+	{
+		id: "HERMES_API_KEY",
+		label: "Hermes",
+		description: "API-server key of your Hermes agent (API_SERVER_KEY in ~/.hermes/.env). Setting it gives the tutor the ask_hermes tool; HERMES_API_URL overrides the default http://127.0.0.1:8642.",
+		docsUrl: "https://hermes-agent.nousresearch.com/docs/user-guide/features/api-server",
+	},
 ] as const;
 
 const AUTH_KEY_IDS: ReadonlySet<string> = new Set(AUTH_KEYS.map((k) => k.id));
@@ -169,6 +175,7 @@ export function validateKeyShape(id: string, rawValue: string): KeyShapeResult {
 			// No public format — a length floor + paste hygiene only.
 			return nonEmpty(20);
 		case "DEEPGRAM_API_KEY":
+		case "HERMES_API_KEY":
 			// No public format — the length floor only catches truncated pastes.
 			return nonEmpty(20);
 		default:

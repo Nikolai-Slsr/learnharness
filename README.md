@@ -8,6 +8,8 @@
 
 <p align="center"><strong>An agent harness for learning.</strong></p>
 
+> **Fork:** adds an Ollama Cloud provider and an `ask_hermes` tool for the [Hermes](https://hermes-agent.nousresearch.com) agent. See [docs/fork.md](docs/fork.md).
+
 <p align="center">
   <a href="https://learnharness.ai">Download</a> ·
   <a href="#how-it-works">How it works</a> ·
