@@ -65,6 +65,12 @@ export interface AuthProviderInfo {
 	label: string;
 }
 
+/** Providers the app registers itself beside pi-ai's builtins
+ *  (src/agent/ollama-cloud.ts) — outside the no-drift pin below. */
+export const APP_PROVIDER_KEYS: readonly AuthProviderInfo[] = [
+	{ id: "ollama-cloud", envVar: "OLLAMA_API_KEY", label: "Ollama Cloud" },
+];
+
 /**
  * THE MODEL-PROVIDER KEY TABLE (provider-keys interlude, 2026-09-19):
  * every pi-ai provider that takes a PLAIN api-key env var — derived from
@@ -120,7 +126,8 @@ export const AUTH_PROVIDER_KEYS: readonly AuthProviderInfo[] = [
 	{ id: "xiaomi-token-plan-sgp", envVar: "XIAOMI_TOKEN_PLAN_SGP_API_KEY", label: "Xiaomi Token Plan SGP" },
 	{ id: "zai", envVar: "ZAI_API_KEY", label: "Z.AI" },
 	{ id: "zai-coding-cn", envVar: "ZAI_CODING_CN_API_KEY", label: "Z.AI Coding CN" },
-] as const;
+	...APP_PROVIDER_KEYS,
+];
 
 /** Every distinct env var a model-provider key rides in (the write side's
  *  writability check — see isProviderEnvVar below; also drives which

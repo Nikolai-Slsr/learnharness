@@ -6,7 +6,8 @@ import {
 	type AgentBuildOptions,
 	type TeachingAgent,
 } from "../agent/teacher-agent.ts";
-import { piEngineForSpec, type PiEngine } from "../agent/models.ts";
+import { piEngineForSpec, piModels, type PiEngine } from "../agent/models.ts";
+import { refreshOllamaCloud } from "../agent/ollama-cloud.ts";
 import { connectionBackgroundAllowed, connectionScopeCurrent, isSubscriptionProvider } from "../agent/subscription-connections.ts";
 import { nativeSubscriptionError } from "../agent/subscription-stream.ts";
 import { chatGPTStreamError } from "../agent/chatgpt-stream.ts";
@@ -213,6 +214,10 @@ export async function handleChatInput(
 		console.info(`[chat ${chatId}] turn refused — ${JSON.stringify(envelope)}`);
 		return Response.json(envelope, { status: 503 });
 	}
+
+	// Ollama Cloud's catalog is dynamic: load it (TTL-cached) before any
+	// engine of this turn or its jobs resolves a model id against it.
+	await refreshOllamaCloud(piModels());
 
 	// THE KEY-PRESENCE GATE (provider-key interlude, owner, 2026-09-25): a
 	// pinned model is not enough — its PROVIDER's key must be present, or

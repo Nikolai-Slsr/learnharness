@@ -20,7 +20,7 @@
 
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { AUTH_PROVIDER_KEYS, isProviderEnvVar } from "../src/core/auth-keys.ts";
+import { APP_PROVIDER_KEYS, AUTH_PROVIDER_KEYS, isProviderEnvVar } from "../src/core/auth-keys.ts";
 import { builtinProviders } from "../node_modules/@earendil-works/pi-ai/dist/providers/all.js";
 import { findEnvKeys } from "../node_modules/@earendil-works/pi-ai/dist/env-api-keys.js";
 
@@ -62,7 +62,7 @@ function deriveProviders() {
 describe("AUTH_PROVIDER_KEYS — the no-drift pin against pi-ai", () => {
 	it("is EXACTLY pi-ai's plain-key provider table (id, envVar, label), exclusions applied", () => {
 		const truth = deriveProviders();
-		const mine = [...AUTH_PROVIDER_KEYS].sort((a, b) => a.id.localeCompare(b.id));
+		const mine = AUTH_PROVIDER_KEYS.filter((p) => !APP_PROVIDER_KEYS.includes(p)).sort((a, b) => a.id.localeCompare(b.id));
 		assert.deepEqual(
 			mine.map((p) => [p.id, p.envVar, p.label]),
 			truth.map((p) => [p.id, p.envVar, p.label]),
